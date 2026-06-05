@@ -16,7 +16,7 @@ The goal was to minimize hardware requirements while keeping the model usable th
   * `-ot ffn_.*_exp=CPU`
 * A lightweight RunPod Serverless handler proxies requests to the model.
 * OpenAI-compatible `/chat/completions` interface.
-* Local fallback to `Qwen2.5-0.5B-Instruct` when the DeepSeek volume is not mounted.
+* Development to `Qwen2.5-0.5B-Instruct` when the DeepSeek volume is not mounted.
 
 ## Technical Notes
 
