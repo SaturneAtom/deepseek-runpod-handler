@@ -1,28 +1,44 @@
-# DeepSeek-V3.1 sur RunPod Serverless (quantization 1-bit)
+# DeepSeek-V3.1 on RunPod Serverless (1-bit Quantized)
 
-Handler RunPod serverless minimal pour faire tourner DeepSeek-V3.1 
-(671B paramètres, quantizé en TQ1_0 via Unsloth dynamic quants) 
-avec llama.cpp.
+Minimal RunPod Serverless deployment for DeepSeek-V3.1 (671B parameters), quantized using Unsloth Dynamic Quants (TQ1_0) and served through llama.cpp.
 
-## Pourquoi
-Je voulais expérimenter le déploiement de modèles frontier sur du 
-hardware accessible. Les quants 1-bit d'Unsloth font tenir DeepSeek-V3.1 
-dans ~150 Go, ce qui le rend exécutable sur un seul nœud H100/A100 
-avec les experts MoE offloadés sur CPU.
+## Why
 
-## Comment ça marche
-- `llama-server` (llama.cpp) sert le modèle sur le port 8080
-- Les experts FFN du MoE sont offloadés sur CPU (`-ot ffn_.*_exp=CPU`) 
-  pour tenir dans la VRAM
-- Le handler RunPod proxy les requêtes au format OpenAI (chat/completion)
-- Fallback sur Qwen2.5-0.5B-Instruct pour tester en local quand le 
-  volume DeepSeek n'est pas monté
+This project explores whether frontier-scale Mixture-of-Experts models can be deployed on accessible GPU infrastructure using aggressive quantization and CPU expert offloading.
 
-## Statut
-POC fonctionnel. Pas production-grade (pas de streaming, pas de batching, 
-gestion d'erreurs minimaliste si llama-server crash).
+The goal was to minimize hardware requirements while keeping the model usable through a standard OpenAI-compatible API.
+
+## Architecture
+
+* `llama-server` (llama.cpp) serves the model on port 8080.
+* MoE FFN experts are offloaded to CPU using:
+
+  * `-ot ffn_.*_exp=CPU`
+* A lightweight RunPod Serverless handler proxies requests to the model.
+* OpenAI-compatible `/chat/completions` interface.
+* Local fallback to `Qwen2.5-0.5B-Instruct` when the DeepSeek volume is not mounted.
+
+## Technical Notes
+
+The Unsloth TQ1_0 quantization reduces DeepSeek-V3.1 to approximately 150 GB, making deployment possible on a single H100/A100-class node with CPU-offloaded experts.
+
+This experiment focuses on infrastructure feasibility rather than maximum throughput.
+
+## Status
+
+Proof of Concept (POC).
+
+Current limitations:
+
+* No streaming support
+* No batching
+* Minimal crash recovery if `llama-server` exits
+* No production monitoring
 
 ## Stack
-- RunPod serverless
-- llama.cpp (llama-server)
-- DeepSeek-V3.1 UD-TQ1_0 quants (Unsloth)
+
+* RunPod Serverless
+* llama.cpp (`llama-server`)
+* DeepSeek-V3.1 UD-TQ1_0 (Unsloth Dynamic Quants)
+* OpenAI-compatible API wrapper
+
