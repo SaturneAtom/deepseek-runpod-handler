@@ -18,7 +18,7 @@ The goal was to minimize hardware requirements while keeping the model usable th
 * OpenAI-compatible `/chat/completions` interface.
 * Development to `Qwen2.5-0.5B-Instruct` when the DeepSeek volume is not mounted.
 
-##Technical Notes
+## Technical Notes
 
 This project explores the practical limits of serving frontier-scale MoE models through aggressive quantization and CPU expert offloading.
 
