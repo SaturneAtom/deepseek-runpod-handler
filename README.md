@@ -18,11 +18,9 @@ The goal was to minimize hardware requirements while keeping the model usable th
 * OpenAI-compatible `/chat/completions` interface.
 * Development to `Qwen2.5-0.5B-Instruct` when the DeepSeek volume is not mounted.
 
-## Technical Notes
+##Technical Notes
 
-The Unsloth TQ1_0 quantization reduces DeepSeek-V3.1, making deployment possible on a single H100/A100-class node with CPU-offloaded experts.
-
-This experiment focuses on infrastructure feasibility rather than maximum throughput.
+This project explores the practical limits of serving frontier-scale MoE models through aggressive quantization and CPU expert offloading.
 
 ## Status
 
