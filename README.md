@@ -20,7 +20,7 @@ The goal was to minimize hardware requirements while keeping the model usable th
 
 ## Technical Notes
 
-The Unsloth TQ1_0 quantization reduces DeepSeek-V3.1 to approximately 150 GB, making deployment possible on a single H100/A100-class node with CPU-offloaded experts.
+The Unsloth TQ1_0 quantization reduces DeepSeek-V3.1, making deployment possible on a single H100/A100-class node with CPU-offloaded experts.
 
 This experiment focuses on infrastructure feasibility rather than maximum throughput.
 
